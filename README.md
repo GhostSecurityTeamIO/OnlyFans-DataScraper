@@ -14,7 +14,47 @@ Build and run the image, mounting the appropriate directories:
 
 ## Running on Linux
 
-https://github.com/DIGITALCRIMINAL/OnlyFans/discussions/889
+Edit: These instructions are not necessary in Ubuntu 21.04. Just run ./start_ofd.py!
+
+FYI, I've got this working in Linux under Ubuntu 20.10. Here's my setup, in case others might find it helpful.
+
+Disclaimers:
+I'm a sysadmin. And I provide no warranties or support for this setup. This is what worked for me, it might not work for you. But hopefully, it will point you in the right directions.
+
+The main problem is that the default Ubuntu 20.10 python is v2.7.18 and python3 is 3.8.6 (not 3.9, as this script requires). So the solution involves installing python3.9 and then using a venv whenever updating and running this code.
+
+I am personally running each of these as a script, but here are the core parts.
+
+Setup
+These are one-time setup steps. You should only need to do this on new Linux installs.
+
+Install Python 3.9
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update && sudo apt install python3.9 python3.9-venv python3.9-dev
+Create the venv in the repo root
+We'll call it venv.
+Ensure that you are in the root directory of this repository!
+cd ~/src/OnlyFans
+python3.9 -m venv venv
+Updates
+Every time we pull the repo, we need to make sure we activate the venv and grab any updates in the possibly updated requirements.txt file.
+
+cd ~/src/OnlyFans
+git pull
+source venv/bin/activate
+pip3 install -r requirements.txt
+Run
+Every time we run, we need to activate the venv before starting the script.
+(technically, the source command only needs to be done once per session, but it hurts nothing to do it repeatedly)
+
+cd ~/src/OnlyFans
+source venv/bin/activate
+python start_ofd.py
+Resources
+I used the following links to help me.
+
+http://ubuntuhandbook.org/index.php/2020/10/python-3-9-0-released-install-ppa-ubuntu/
+https://docs.python.org/3/tutorial/venv.html
 
 ## Running the app locally
 
